@@ -1,0 +1,29 @@
+.divCard{
+    border-radius: 50px;
+    overflow: hidden;
+    margin: 50px;
+    background-image: url('/src/images/rick-y-morty-atardecer.jpg');
+    flex: 0 0 auto;
+    width: 450px;
+    height: auto;
+}
+.divCard:hover{
+    background-image: url('/src/images/rick-y-morty-noche.jpg');
+}
+
+.buttonCard{
+    background-color: red;
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.h2Card{
+
+}
+
+.imgCard{
+    border-radius: 10px;
+    max-width: 100%;
+}

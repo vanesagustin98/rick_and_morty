@@ -1,0 +1,21 @@
+/* .divBar{
+    
+} */
+.inputBar{
+    background-color: #f1f1f1;
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.buttonBar{
+    flex: 1;
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.buttonBar:hover {
+    background-color: #7939a3;
+}
