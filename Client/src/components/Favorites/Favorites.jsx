@@ -3,7 +3,8 @@ import { connect, useDispatch } from 'react-redux';
 import Card from '../Card/Card';
 import { filterCards, orderCards } from '../../redux/actions';
 
-function Favorites({myFavorites}) {
+function Favorites({ myFavorites }) {
+    console.log(myFavorites);
     const [aux, setAux] = useState(false)
     const dispatch = useDispatch()
     function handleOrder(event) {
@@ -16,14 +17,14 @@ function Favorites({myFavorites}) {
     return (
         <div>
             <h1>Favorites</h1>
-            <select onChange={handleOrder}>
-                <option disabled selected >Order</option>
+            <select onChange={handleOrder} defaultValue="">
+                <option disabled value="">Order</option>
                 <option value="A">Ascendente</option>
                 <option value="D">Descendente</option>
             </select>
 
-            <select onChange={handleFilter}>
-                <option disabled selected>Filter Gender</option>
+            <select onChange={handleFilter} defaultValue="">
+                <option disabled value="">Filter Gender</option>
                 <option value="all">All</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -32,17 +33,17 @@ function Favorites({myFavorites}) {
             </select>
             <div>
                 {myFavorites.map((personaje) => (
-                <Card
-                    showCloseButton={false}
-                    key={personaje.id}
-                    id={personaje.id}
-                    name={personaje.name}
-                    status={personaje.status}
-                    species={personaje.species}
-                    gender={personaje.gender}
-                    origin={personaje.origin}
-                    image={personaje.image}
-                />
+                    <Card
+                        key={personaje.id}
+                        id={personaje.id}
+                        name={personaje.name}
+                        status={personaje.status}
+                        species={personaje.species}
+                        gender={personaje.gender}
+                        origin={personaje.origin}
+                        image={personaje.image}
+                        showCloseButton={false}
+                    />
                 ))}
             </div>
         </div>
@@ -50,7 +51,7 @@ function Favorites({myFavorites}) {
 }
 
 function mapStateToProps(state) {
-    return{
+    return {
         myFavorites: state.myFavorites
     }
 }

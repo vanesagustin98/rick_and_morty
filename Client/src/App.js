@@ -13,27 +13,22 @@ import Favorites from './components/Favorites/Favorites';
 export default function App() {
    const [characters, setCharacters] = useState([]);
    const [access, setAccess] = useState(false)
-   // const EMAIL = 'vanesagustin98@hotmail.com'
-   // const PASSWORD = 'vanessa98'
    const navigate = useNavigate()
    const location = useLocation()
    const current = location.pathname !== '/'
 
-   // function login(userData) {
-   //    if (EMAIL === userData.email && PASSWORD === userData.password) {
-   //       setAccess(true)
-   //       navigate('/home')
-   //    }else{alert('Email o contraseña incorrectos')}
-   // }
-   function login(userData) {
-      const { email, password } = userData
-      const URL = 'http://localhost:3001/rickandmorty/login/'
-      axios(URL + `?email=${email}&password=${password}`).then(({ data }) => {
-         const { access } = data
-         setAccess(data)
+   async function login(userData) {
+      try {
+         const { email, password } = userData
+         const URL = 'http://localhost:3001/rickandmorty/login/'
+         const result = await axios.get(URL + `?email=${email}&password=${password}`)
+         const { access } = result.data
+         setAccess(result.data)
          access && navigate('/home')
          !access && alert('Email o contraseña incorrectos')
-      })
+      } catch (error) {
+         console.log(error.message);
+      }
    }
 
    function logOut() {
@@ -45,26 +40,23 @@ export default function App() {
       !access && navigate('/');
    }, [access, navigate]);
 
-   function onSearch(id) {
-      axios
-         .get(`http://localhost:3001/rickandmorty/character/${id}`)
-         .then((response) => {
-            console.log('response');
-            if (response.status === 200 && response.data && response.data.name) {
-               const newCharacter = response.data;
-               const characterExists = characters.some((character) => character.id.toString() === id.toString());
-               if (characterExists) {
-                  alert('¡Este personaje ya está en la lista!');
-                  return;
-               } else { setCharacters((oldChars) => [...oldChars, newCharacter]); }
-            } else {
-               alert('¡No hay personajes con este ID!');
-            }
-         })
-         .catch((error) => {
-            console.error('Error en la solicitud:', error);
-            alert('Ocurrió un error al obtener el personaje');
-         });
+   async function onSearch(id) {
+      try{
+         const result = await axios(`http://localhost:3001/rickandmorty/character/${id}`)
+         if (result.data && result.data.name) {
+            const newCharacter = result.data;
+            const characterExists = characters.some((character) => character.id.toString() === id.toString());
+            if (characterExists) {
+               alert('¡Este personaje ya está en la lista!');
+               return;
+            } else { setCharacters((oldChars) => [...oldChars, newCharacter]); }
+         } else {
+            alert('¡No hay personajes con este ID!');
+         }
+      }catch (error) {
+         console.error('Error en la solicitud:', error.message);
+         alert('Ocurrió un error al obtener el personaje');
+      }
    }
 
    function onClose(id) {
